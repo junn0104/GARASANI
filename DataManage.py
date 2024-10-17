@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import json
 
 data_path = './data'
