@@ -72,4 +72,4 @@ def make_data():
 
 
 if __name__ == '__main__':
-    app.run(host="118.67.146.206", port="1994")
+    app.run(host="0.0.0.0", port="1994")
