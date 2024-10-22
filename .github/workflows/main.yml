@@ -41,6 +41,10 @@ jobs:
       with:
         python-version: ${{ env.PYTHON_VERSION }}
 
+    - name: Print Python Version
+      run: |
+        python --version
+
     - name: Install Python Dependencies
       run: |
         python -m pip install --upgrade pip
