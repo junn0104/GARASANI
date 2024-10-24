@@ -34,9 +34,6 @@ def start():
 
 #     return f"File was detected as {prediction}", 200
 
-
-#phone_number의 data_name 데이터 요청
-
 @app.route('/get_data', methods=['POST'])
 def get_data():
     phone_number = request.form['phone_number']
@@ -44,8 +41,6 @@ def get_data():
     data = read(phone_number)
     return str(data[data_name]), 200
     
-
-#phone_number의 data_name 데이터 data_value로 업데이트
 
 @app.route('/update_data', methods=['POST'])
 def update_data():
@@ -56,14 +51,13 @@ def update_data():
     update(phone_number, data_name, data_value)
     return "Data successfully updated", 200
 
-# phone_number와 data_name, data_value로 새로운 데이터를 생성
+
 @app.route('/make_data', methods=['POST'])
 def make_data():
     phone_number = request.form['phone_number']
     data_name = request.form['data_name']
     data_value = request.form['data_value']
     
-    # 새로운 데이터를 만들기 위한 로직 (DB 혹은 파일에 저장)
     # create(phone_number, data_name, data_value)
     
     return "Data successfully created", 200
