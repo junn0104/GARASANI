@@ -52,6 +52,7 @@ jobs:
         pip install keras
         pip install flask
         pip install pydub
+        pip install flet
   
     - name: Setup Flutter ${{ env.FLUTTER_VERSION }}
       uses: subosito/flutter-action@v2
