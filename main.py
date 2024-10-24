@@ -6,7 +6,7 @@ import os
 import sqlite3
 
 from DataManage import *
-from AI import predict
+# from AI import predict
 
 app = Flask(__name__)
 
@@ -16,23 +16,23 @@ app.config['JSON_AS_ASCII'] = False
 def start():
     return "Hello World"
 
-@app.route('/upload_audio', methods=['POST'])
-def upload_audio():
-    file = request.files['audio']
-    
-    upload_folder = './uploaded'
+# @app.route('/upload_audio', methods=['POST'])
+# def upload_audio():
+#     file = request.files['audio']
+#    
+#     upload_folder = './uploaded'
 
-    file_path = os.path.join(upload_folder, file.filename)
-    file.save(file_path)
-    audio = AudioSegment.from_file(file_path, format="m4a")
-    wavFilePath = file_path.replace("m4a", "wav")
-    audio.export(wavFilePath, format="wav")
-    prediction = predict(wavFilePath)
+#     file_path = os.path.join(upload_folder, file.filename)
+#     file.save(file_path)
+#     audio = AudioSegment.from_file(file_path, format="m4a")
+#     wavFilePath = file_path.replace("m4a", "wav")
+#     audio.export(wavFilePath, format="wav")
+#     prediction = predict(wavFilePath)
     
-    os.remove(file_path)
-    os.remove(wavFilePath)
+#     os.remove(file_path)
+#     os.remove(wavFilePath)
 
-    return f"File was detected as {prediction}", 200
+#     return f"File was detected as {prediction}", 200
 
 
 #phone_number의 data_name 데이터 요청
