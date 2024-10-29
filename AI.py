@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 import tensorflow as tf
 import keras
+import math
+
+def sigmoid(x):
+    return 1 / (1 + math.exp(-x))
 
 
 commands = ['deepvoice', 'human']
@@ -40,8 +44,12 @@ def predict(file_path):
     x = x[tf.newaxis,...]
 
     prediction = imported(x)
+    print(prediction)
+    return sigmoid(prediction[0][0]-prediction[0][1])
 
+'''
     if prediction[0][0] > prediction[0][1]:
         return "deepvoice"
     else:
         return "human"
+'''
