@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from flask import Flask, request
+from flask import Flask, jsonify, request
 
 from pydub import AudioSegment
 import os
@@ -19,7 +19,7 @@ def start():
 # @app.route('/upload_audio', methods=['POST'])
 # def upload_audio():
 #     file = request.files['audio']
-#    
+    
 #     upload_folder = './uploaded'
 
 #     file_path = os.path.join(upload_folder, file.filename)
@@ -32,15 +32,48 @@ def start():
 #     os.remove(file_path)
 #     os.remove(wavFilePath)
 
-#     return f"File was detected as {prediction}", 200
+#     return jsonify({"probability": float(prediction)}), 200
+
+
+# phone_number의 data_name 데이터 요청
 
 @app.route('/get_data', methods=['POST'])
 def get_data():
-    phone_number = request.form['phone_number']
-    data_name = request.form['data_name']
-    data = read(phone_number)
-    return str(data[data_name]), 200
+    phone_number = request.args.get('phone_number')
+    print(phone_number)
+    try:
+        data = read(phone_number)
+    except:
+        initialize(phone_number)
+        data = read(phone_number)
+    print(type(data))
+    return data, 200
     
+@app.route('/add_percent', methods=['POST'])
+def add_percent():
+    phone_number = request.args.get('phone_number')
+    percent = request.args.get('percent')
+    print(type(percent))
+
+    add_recent10(phone_number, float(percent))
+    return "Data successfully updated", 200
+#phone_number의 data_name 데이터 data_value로 업데이트
+
+@app.route('/reported', methods=['POST'])
+def reported():
+    reporter = request.args.get('reporter')
+    reported = request.args.get('reported')
+    if isreported(reporter, reported):
+        return "It already exist", 409
+    reported1(reporter, reported)
+    return "Data successfully updated", 200
+
+@app.route('/detected', methods=['POST'])
+def detected():
+    phone_number = request.args.get('phone_number')
+
+    detected1(phone_number)
+    return "Data successfully updated", 200
 
 @app.route('/update_data', methods=['POST'])
 def update_data():
@@ -51,19 +84,5 @@ def update_data():
     update(phone_number, data_name, data_value)
     return "Data successfully updated", 200
 
-
-@app.route('/make_data', methods=['POST'])
-def make_data():
-    phone_number = request.form['phone_number']
-    data_name = request.form['data_name']
-    data_value = request.form['data_value']
-    
-    # create(phone_number, data_name, data_value)
-    
-    return "Data successfully created", 200
-
-
-
-
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port="1994")
+    app.run(host="0.0.0.0", port="5000")
