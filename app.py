@@ -6,7 +6,7 @@ import os
 import sqlite3
 
 from DataManage import *
-# from AI import predict
+from AI import predict
 
 app = Flask(__name__)
 
